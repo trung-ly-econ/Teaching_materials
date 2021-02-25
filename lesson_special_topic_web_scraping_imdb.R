@@ -65,7 +65,7 @@ movie <- data.frame(movie_name, director, genre, stars, stringsAsFactors=FALSE)
 
 ###############################################################################
 
-#################### Part 2: Do it for all 2018 movies ####################
+################## Part 2: Do it for first fifty 2018 movies ##################
 
 link_movie_list_2018 <- "https://www.imdb.com/search/title/?title_type=feature&year=2018-01-01,2018-12-31&sort=num_votes,desc"
 
@@ -112,7 +112,21 @@ get_movie_info <- function(link){
 }
 
 # Run a "loop" through everything
+# This is one way of doing it
 # https://stackoverflow.com/questions/32833664/how-do-i-add-rows-to-a-data-frame-using-sapply
 # The popular function call do.call(rbind, <list>) combines  elements of a list.
 absdf <- lapply(movie_links_2018, FUN = get_movie_info)
 output <- do.call(rbind, absdf)
+
+# OR: can do a for loop
+output2 <- data.frame()
+for (i in 1:length(movie_links_2018)){
+  link_to_indiv_movie <- movie_links_2018[i]
+  new_movie <- get_movie_info(link_to_indiv_movie)
+  output2 <- rbind(output2,new_movie)
+}
+
+# Check to ensure both methods yield the same data frame
+all.equal(output, output2) # running this line should give TRUE
+
+# Assignment: do the same thing but instead of getting info for each movie and combine them by row, get all the titles first, then get all the directors, then the genres, and then the stars. Then combine them into a data frame using output <- (titles, directors, genres, stars)
