@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # This is about scraping tables on webpages #
 rm(list=ls())
 
@@ -36,4 +37,3 @@ Spurs
 
 SpursDataFrame <- data.frame(Spurs[c(1,2)])
 View(SpursDataFrame)
-#-----------------------------------------------------------------------------#
