@@ -1,52 +1,31 @@
 # This is about scraping tables on webpages #
 rm(list=ls())
 
-##### Part 0: Set working directory #####
-# Working directory = the place where files are saved
-# Reasons to set working directory:
-# 1. Know exactly where files are saved
-# 2. Collaborators can put files in their own folder, change wd, & code will run
-getwd()
-# setwd("C:/Users/trungly/Desktop/Capstone_course")
-
 library(tidyverse)
 library(rvest)
 
-# Right click on webpage, inspect, then click on cursor and hover over table
 link <- "https://www.espn.com/nfl/player/stats/_/id/3139477/patrick-mahomes"
-passing_stat <- link %>%
+
+mahomes <- link %>%
   read_html() %>%
-#  html_nodes("div.ResponsiveTable.ResponsiveTable--fixed-left.pt4") %>%
-  html_nodes("div") %>%
-  .[1] %>%
+  html_table() # extract all tables on the page and put them into a list
+
+mahomes # this is a list that contains all the tables on the page
+
+data <- data.frame(mahomes[c(1,2)]) # take the first 2 items of the list and 
+                        # combine them into a data frame
+
+#-----------------------------------------------------------------------------#
+####----- Another example-----####
+
+rm(list=ls())
+URL <- "http://www.espn.com/nba/team/stats/_/name/sa/san-antonio-spurs"
+Spurs <- URL %>%
+  read_html() %>%
   html_table()
 
-#############################################################
-# orginal
-rm(list=ls())
-URL <- "http://www.espn.com/nba/team/stats/_/name/sa/san-antonio-spurs"
-Spurs <- read_html(URL)
 Spurs
-Spurs %>%
-  html_nodes(xpath = '//*[@id="my-players-table"]/div[3]/div[3]/table') %>%
-  html_table(Spurs) 
-Spurs <- html_table(Spurs)
-Spurs
-SpursDataFrame <- data.frame(Spurs)
-SpursDataFrame
-#############################################################
 
-
-rm(list=ls())
-
-URL <- "http://www.espn.com/nba/team/stats/_/name/sa/san-antonio-spurs"
-Spurs <- read_html(URL)
-Spurs
-Spurs %>%
-  html_nodes(xpath = '//*[@id="fittPageContainer"]/div[2]/div[5]/div/div/section/div/div[5]/table') %>%
-  html_table() 
-Spurs <- html_table(Spurs)
-#Spurs
-SpursDataFrame <- data.frame(Spurs)
-SpursDataFrame
-
+SpursDataFrame <- data.frame(Spurs[c(1,2)])
+View(SpursDataFrame)
+#-----------------------------------------------------------------------------#
