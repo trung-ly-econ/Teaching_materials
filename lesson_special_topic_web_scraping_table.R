@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # This is about scraping tables on webpages #
 rm(list=ls())
 
