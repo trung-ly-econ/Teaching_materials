@@ -20,6 +20,8 @@ data <- data.frame(mahomes[c(1,2)]) # take the first 2 items of the list and
 
 # If we want to extract a list element with its own data type, we can use double square brackets:
 # (This output is a vector)
+# For more informatio, see here:
+# https://statisticsglobe.com/difference-between-bracket-and-double-brackets-in-r
 
 #-----------------------------------------------------------------------------#
 ####----- Another example-----####
