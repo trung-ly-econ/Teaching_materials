@@ -86,9 +86,32 @@
   
   rm(data, data_clean)
 
-  ##### Part 6: (Very) basic plotting #####
+##### Part 6: (Very) basic plotting #####
   # syntax: plot(x_axis_variable, y_axis_variable, 
   #               xlab = "name of x axis",
   #               ylab = "name of y axis",
   #               main = "name of graph")
+
+#### Part 7: data import & export ####
+  # Easiest way is to use the package rio. 
+  library(rio)
+  # To import data, use import("path to file")
+  # if already in working directory, just need file name between ""
+  # e.g. import("example_data.xlsx")
+  # To export a particular sheet of a multi-sheet excel file, use the which argument with either "sheet name" or sheet number
+  # e.g. import("example_data.xlsx", which = "genes")
+  # OR import("example_data.xlsx", which = 2)
+  
+  # To export data, use export(data frame, "file name")
+  # e.g. export(mtcars, "cars_data.xlsx")
+  # One of the advantages of R is users can work with multiple data sets as the same time so naturally one may want to save those data sets into one excel file
+  # e.g. export(list(cars = mtcars, genes = iris), "multi.xlsx")
+  # (this commands creates an xlsx file with two sheets, cars and genes)
+  
+  #---- Save & load R workspace ----#
+  # To save: save.image(file = "path to file")
+  # file name should have .RData extension
+  # To load: load("path to .RData file")
+
+
 # End of lecture 1

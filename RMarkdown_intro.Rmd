@@ -1,0 +1,128 @@
+---
+title: "Introduction to RMarkdown"
+author: "Trung Ly"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    number_sections: yes
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+inline <- function(x = "") paste0("`` `r ", x, "` ``")
+```
+
+# What is RMarkdown and why use it?
+
+RMarkdown is a feature of R that allows for the creation of dynamic documents. Codes and their outputs as well as commentary can be saved in one single file. One of the most important benefits of RMarkdown is the way it changes the normal workflow. Suppose you are working on a project, the end product of which is a Word or PDF report. Without using RMarkdown, you have to do the analysis in R and produce the necessary graphs/results for use in the Word or LaTeX document. This means that any changes have to be made both in R and in the write-up. This workflow works fine as long as you do not change the graphs/results very often. But doing so many times may increase the likelihood of making mistakes.
+
+RMarkdown can help improve this workflow significantly. Because R codes and the commentary are in one single file, whenever the code needs to be changed, e.g. when the dataset used in the analysis changes or a variable is added to a regression, you simply need to make the necessary modifications in the RMarkdown file and compile (knit) it. The result will be a file that contains not only the new codes (if you choose to show them) but also the up-to-date result, thereby saving the intermediary step of transferring R output into Word or LaTeX. 
+
+# Using RMarkdown
+
+To start an RMarkdown document, click File, then New File, and then choose RMarkdown... You will then be asked to provide a title for the document, the name of the author, and the type of output. A new RMarkdown file contains the instructions on how to do some basic things with RMarkdown that can be modified or deleted as needed. To knit an RMarkdown file, click the Knit icon in RStudio or use Ctrl + Shift + K. Let's discuss some of the things you will need to know to create a document using RMarkdown.
+
+## The YAML header
+
+At the top of an RMarkdown file is some text surrounded by ``---``'s. This is what is known as the YAML frontmatter (or header or metadata). The information in the YAML frontmatter controls how the output is to be presented. 
+
+In the YAML header of this document, I make the following modifications to the default YAML header:
+
+* Change the date option so that the output shows the date the RMarkdown file is knitted. To do so, I specify `` "`r "\u0060r format(Sys.time(), '%d %B, %Y')\u0060"`" `` as the date. Doing this shows the date as "day month, year". Other formats are possible. See <https://bookdown.org/yihui/rmarkdown-cookbook/update-date.html> for more details.
+
+* Instead of output: html_document, it now becomes:
+
+<center>
+
+    output: 
+               html_document:
+                       number_sections: yes
+
+</center>
+This allows for numbered headers. Note that indentation matters, so it is very important that the second line is indented, and so is the third line. 
+
+## Text
+
+### Line break
+
+There are several ways to force a line break in RMarkdown. Simply putting `` <br> `` at the end of a line will end that line and whatever follows will be on a new line. Alternatively, you can leave a blank line between the previous line and the new line. The blank line serves as a signal to introduce a line break.
+
+### Headers
+
+Unlike in R where # indicates the line is a comment, # is used to signify a header in RMarkdown. There are six level of headers with # being the largest header and ###### being the smallest. 
+
+### Text formatting 
+
+* Text wrapped between two \*'s or \_'s is italic. E.g. typing ``*This text is italic*`` or ``_This text is italic_`` into RMarkdown should produce _This text is italic_.
+* Text wrapped between two \*\*'s or \_\_'s is bold. E.g. typing ``**This text is bold**`` or ``__This text is bold__`` into RMarkdown should produce **This text is bold**.
+
+
+### Lists
+
+#### Unnumbered lists (bulleted items)
+
+A bulleted item begins with an *. To do a sub-bulleted item, indent that item. In other words:
+
+    * Item 1
+
+    * Item 2 
+
+        * Item 2a
+    
+        * Item 2b
+
+will appear as:
+
+* Item 1
+
+* Item 2 
+
+  * Item 2a
+    
+  * Item 2b
+
+
+#### Numbered lists (numbered items)
+
+All numbered items begin with a 1. (number one followed by a dot). The numbers are incremented automatically in the output. In other words:
+
+    1. Numbered list item 1
+
+    1. Numbered list item 2
+
+will appear as
+
+1.  Numbered list item 1
+
+1.  Numbered list item 2
+
+## R code
+
+In RMarkdown R codes appear inside "code chunks" which begins with `` ```{r}`` and end with `` ``` ``. R interprets everything between `` ```{r}`` and `` ``` `` as R code and runs it like it would any normal code written in R. A code chunk can be inserted by manually typing it in or using the shortcut Ctrl + Alt + I.
+
+You can name a code chunk by including it right after the letter r in `` ```{r}``, i.e. `` ```{r name-of-chunk}``. This is optional but helpful. 
+
+It is a good habit to set the working directory and load data as well as all the necessary packages in the first chunk before writing any text.
+
+### Chunk options
+
+Options can be included in code chunks to customize them. Some helpful chunk options are as follows: 
+
+* ``include = FALSE`` runs the code but does not include it and its output in the final RMarkdown output.
+* ``echo = FALSE`` runs the code but does not include the code in the final RMarkdown output. Note that the output of the code is visible.
+* ``results = 'hide'`` shows the code but hides its output. 
+
+See <http://yihui.name/knitr/options/> for a complete list of chunk options.
+ 
+### In-line R code
+
+Inline R codes appear between `` `r`` and `` ` ``. These are particularly useful to provide descriptive statistics. For instance, if you type:
+
+> The mean of the mpg variable in the mtcars dataset is `r inline('mean(mtcars$mpg)')`  
+
+and then knit the file, the output is 
+
+> The mean of the mpg variable in the mtcars dataset is  `r mean(mtcars$mpg)`. 
+
+If the variable mpg in the mtcars data set changes, when the document is knit, the output will be automatically updated. 

@@ -30,6 +30,3 @@ rm(list = ls())
     "a", 2, 3.6,
     "b", 1, 8.5
   )
-
-#### Part 3: data import ####
-  # Easiest way is to use the package rio. The function is rio("path to file")
